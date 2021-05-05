@@ -1,0 +1,201 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+        <record id='demande_state_view_form' model='ir.ui.view'>
+            <field name="name">demande.state.form</field>
+            <field name="model">demandes.stats</field>
+            <field name="arch" type="xml">
+                <form>
+
+                 
+                    <header>
+                        
+                          <button name="button_approved_responsable"
+                          states="draft,approved_responsable,approved_da,approved_it"
+                          string="Approuver"
+                          type="object"
+                          class="oe_highlight"
+                          groups="demandes_stats.group_market_execution_achat"/>
+
+                        <button name="print_vendor_creation"
+                          states="approved_responsable,approved_da,approved_it"
+                          string="Imprimer"
+                          type="object"
+                          class="oe_highlight"/>
+
+                        <field name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,approved_responsable,approved_da,approved_it,done"
+                        statusbar_colors='{"approved_responsable":"blue"}'/>              
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                              <button name="%(action_window)d" type="action" string="Brouillon"  class="oe_stat_button" icon="fa-angle-right"/>
+                              <button name="%(action_window)d" type="action" string="Encours"  class="oe_stat_button" icon="fa-angle-right"/>
+                              <button name="%(action_window)d" type="action" string="Traités"  class="oe_stat_button" icon="fa-check-square-o"/>
+                              <button name="%(action_window)d" type="action" string="Rejetés"  class="oe_stat_button" icon="fa-times"/>
+                              <!-- <button name="open_assignation_total" string="Traités" type="object" class="oe_stat_button" icon="fa-dashboard"/> -->
+                        </div>
+                        <group col="2">
+                                <group string='Demandé Par:'>
+                                    <field name="demandor_id"/>
+                                    <field name="demande_date"/>
+                                    <field name="department_id"/>
+                                    <field name="assigned_to"/>                                </group>
+                                <group string="Traité Par: ">
+                                    <field name="traited_by"/>                                
+                                    <field name="intervention_date"/>
+                                    <!-- <field name="phone_number_intervenor" />
+                                    <field name="email_intervenor"/> -->
+                                </group>
+                                <group col="2" string="Type de demmande">
+                                    <field name="type_demande"/>
+                                </group>                                  
+                                <group string="Description">
+                                    <field name="description"/>
+                                </group>
+                                </group>
+
+                      </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="demandes_stats_view_tree" model="ir.ui.view">
+            <field name="name">demande.stats.tree</field>
+            <field name="model">demandes.stats</field>
+            <field name="arch" type="xml">
+                <tree>
+                  <field name="type_demande"/>
+                  <field name="demandor_id" />
+                  <field name="demande_date"/>
+                  <field name="department_id"/>
+                  <field name="assigned_to"/>
+                  <!-- <field name="phone_number_demandor"/>
+                  <field name="email_demandor"/> -->
+                  <field name="traited_by"/>                                
+                  <field name="intervention_date"/>
+                  <!-- <field name="phone_number_intervenor" />
+                  <field name="email_intervenor"/> -->
+                </tree> 
+            </field>
+        </record>
+        
+
+        <record model="ir.ui.view" id="view_demandes_stats_search">
+            <field name="name">demandes.states.search</field>
+            <field name="model">demandes.stats</field>
+            <field name="arch" type="xml">
+                <search string="type_file search">
+                    <field name="demandor_id" string="Demandé Par:"
+                       filter_domain="['|', ('demandor_id', 'ilike', self), ('traited_by', 'ilike', self)]"/>
+                    <field name="traited_by" string="Traiter par :"/>
+                    <field name="demande_date" string="Date de demande"/>
+                    <filter string="CREATION FOURNISSEUR"
+                            name="demandor_id"
+                            domain="[('type_demande', '=', 'crf')]"/>
+                    <filter string="CREATION CLIENT"
+                            name="demandor_id"
+                            domain="[('type_demande', '=', 'crc')]"/>
+                    <filter string="DEMANDE DE CORRECTION" 
+                            name="demandor_id" 
+                            domain="[('type_demande', '=', 'corc')]"/>
+                
+                </search>
+            </field>
+        </record>
+          
+          <!-- <filter string="DEMANDE PAR: " help="Draft, Open and Pending Tasks" icon="terp-project"/>
+                  <field name="demandor">
+                    <filter domain="[('demandor','=',uid)]"/>
+                  </field>
+
+                  <filter string="TRAITER PAR: " help="Draft, Open and Pending Tasks" icon="terp-project"/>
+                  <field name="traited_by">
+                    <filter domain="[('traited_by','=',uid)]"/>
+                  </field>
+
+                    <filter string="DATE DE DEMANDE: " help="Draft, Open and Pending Tasks" icon="terp-project"/>
+                      <field name="demande_date">
+                  </field>
+
+                  <filter string="DATE DE TRAITEMENT: " help="Draft, Open and Pending Tasks" icon="terp-project"/>
+                      <field name="intervention_date">
+                  </field> -->
+                  
+<!-- 
+                  <filter string="DEMANDE DE CORRECTION"  help="Draft, Open and Pending Tasks" icon="terp-project"/>
+                      <field name="type_demande">
+                      <filter domain="[('type_demande','ilike','corc')]"/>
+                  </field> -->
+                
+
+      <record model="ir.ui.view" id="view_order_line_graph">
+          <field name="name">states.line.graph</field>
+          <field name="model">demandes.stats</field>
+          <field name="type">graph</field>
+          <field name="arch" type="xml">
+                <graph string="DEMANDE/JOUR" type="bar" stacked="1" sample="1">
+                      <field name="demande_date" interval="day"/>
+                      <field name="type_demande" type="row"/>
+                      <field name="demandor_id" type="measure"/>
+                </graph>
+            </field>
+      </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="demandes_stats.action_window">
+      <field name="name">DEMANDES STATS</field>
+      <field name="res_model">demandes.stats</field>
+      <field name="view_mode">tree,graph,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="demandes_stats.action_server">
+      <field name="name">demandes_stats server</field>
+      <field name="model_id" ref="model_demandes_stats_demandes_stats"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="DEMANDES STATES" 
+    id="menu_root" 
+    sequence="115" 
+    groups="base.group_user" 
+    web_icon="demandes_stats,static/description/icon.png"/>
+
+    <menuitem name="DEMANDE STATES"  
+    parent="menu_root" 
+    id="demande_stats_menu" 
+    sequence="1" 
+    action="demandes_stats.action_window"
+    groups ="base.group_user"/>
+
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="demandes_stats.menu_1" parent="demandes_stats.menu_root"/>
+    <menuitem name="Menu 2" id="demandes_stats.menu_2" parent="demandes_stats.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="demandes_stats.menu_1_list" parent="demandes_stats.menu_1"
+              action="demandes_stats.action_window"/>
+    <menuitem name="Server to list" id="demandes_stats" parent="demandes_stats.menu_2"
+              action="demandes_stats.action_server"/>
+-->
+  </data>
+</odoo>

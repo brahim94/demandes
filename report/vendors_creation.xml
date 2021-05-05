@@ -1,0 +1,177 @@
+<odoo>
+
+    <report
+        id="action_vendor_creation"
+        model="demandes.stats"
+        string="Creation Fournisseur"
+        report_type="qweb-pdf"
+		name="demandes_stats.ao"
+		print_report_name="'Demande de Création Fournisseur'"/>
+
+        <template id="ao">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+
+ <style>
+                table, th, td {
+                border: none;
+                }
+                th, td {
+                padding: 1px;
+                text-align: left;    
+                }
+                th.violet {
+                background-color: #FFC0CB;
+                }
+                th.bleu {
+                background-color: #8dd9fc;
+                }
+                th.yellow {
+                background-color: #FFFF00;
+                }
+                div.shadow {
+                border: 1px solid black;
+                box-shadow: 10px 5px 5px black;
+                margin-left:auto; 
+                margin-right:auto;
+                }
+                table.solid {
+                float:left;
+                border-collapse: separate;
+                border-spacing: 7px 7px; 
+                }
+                
+                td.solid {
+                border: 1px solid black;
+                }
+                th.solid {
+                border: 1px solid black;
+                }
+                div.margin {
+                margin-top:100px;
+                }
+                div.n{
+                text-align:center;
+                vertical-align:center;
+                margin-left:auto; 
+                margin-right:auto;
+                }
+                th.middle {
+                text-align:center;
+                vertical-align:middle;
+                }
+                th.doted {
+                border: 1px black;
+                border-style: dotted;
+                }
+                table.centre {
+                margin-top:40px;
+                margin-left:auto; 
+                margin-right:auto;
+                }
+
+                </style>
+
+                <div class="n shadow" width="50%">
+                    <strong><h4> DEMANDE DE CREATION FOURNISSEUR  </h4></strong>
+                </div>
+
+                <table  class="solid" width="100%">
+                        <tr>
+                            <th class="solid bleu" style="text-align: center" colspan="2">Information Fournisseur</th>
+                        </tr>
+                        <tr>
+                            <th class="solid bleu" style="text-align: left">Adresse : </th>
+                            <td class="solid" style="text-align: center" >Rue 10 N° 827 Palmier Casablanca - Maroc</td>
+                        </tr>
+                        <tr>
+                            <th class="solid bleu" style="text-align: left">Numéro de téléphone : </th>
+                            <td class="solid" style="text-align: center">300065</td>
+                        </tr>
+                        <tr>
+                            <th class="solid bleu" style="text-align: left">RC : </th>
+                            <td class="solid" style="text-align: center">300065</td>
+                        </tr>
+                        <tr>
+                            <th class="solid bleu" style="text-align: left">ICE : </th>
+                            <td class="solid" style="text-align: center">300065287298299</td>
+                        </tr>
+                        <tr>
+                            <th class="solid bleu" style="text-align: left">IF : </th>
+                            <td class="solid" style="text-align: center">300065</td>
+                        </tr>
+                        <tr>
+                            <th class="solid bleu" style="text-align: left">Site Web : </th>
+                            <td class="solid" style="text-align: center">www.exemple.ma</td>
+                        </tr>
+                        <tr>
+                            <th class="solid bleu" style="text-align: left">Adresse Email : </th>
+                            <td class="solid" style="text-align: center">exemple@outlook.ma</td>
+                        </tr>
+
+                    </table>
+
+                    <table  class="solid" width="100%">
+                        <tr>
+                            <th class="solid bleu" style="text-align: center" colspan="2">Modalités de Paiement</th>
+                        </tr>
+                        
+                        <tr>
+                            <th class="solid bleu" style="text-align: left">Mode de paiement : </th>
+                            <td class="solid" style="text-align: center">
+                                <t> 
+                                    <label for="checkbox" class="label-table form-check-label">Cheque :</label>
+                                    <input type="checkbox" id="checkbox104_anything_you_give" />
+                                </t>
+                            
+                                <t> 
+                                    <label for="checkbox" class="label-table form-check-label">Espèce :</label>
+                                    <input type="checkbox" id="checkbox104_anything_you_give" />
+                                </t>
+                                <t> 
+                                    <label for="checkbox" class="label-table form-check-label">Carte Bancaire :</label>
+                                    <input type="checkbox" id="checkbox104_anything_you_give" checked="checked"/>
+                                </t>
+
+                                <!-- <t> 
+                                    <input type="checkbox" id="checkbox104_anything_you_give" checked="checked"/>
+                                        <label for="checkbox" class="label-table form-check-label">: Autre </label>
+                                </t> -->
+                             
+                            </td>
+                        </tr>
+                        <tr>
+                        <th class="solid bleu" style="text-align: left">Condition de paiement : </th>
+                        <td class="solid" style="text-align: center">
+                                <t> 
+                                    <label for="checkbox" class="label-table form-check-label">Paiement Immédiat :</label>
+                                    <input type="checkbox" id="checkbox104_anything_you_give" />
+                                </t>
+                            
+                                <t> 
+                                    <label for="checkbox" class="label-table form-check-label">15 Jours : </label>
+                                    <input type="checkbox" id="checkbox104_anything_you_give" checked="checked"/>
+                                </t>
+                                <t> 
+                                    <label for="checkbox" class="label-table form-check-label">21 Jours  : </label>
+                                    <input type="checkbox" id="checkbox104_anything_you_give" />
+                                </t>
+
+                                <t> 
+                                    <label for="checkbox" class="label-table form-check-label">Fin de mois suivant : </label>
+                                    <input type="checkbox" id="checkbox104_anything_you_give" checked="checked"/>
+                                </t>
+                             
+                            </td>
+                        </tr>
+
+                    </table>
+
+
+             </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
